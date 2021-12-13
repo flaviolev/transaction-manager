@@ -1,4 +1,4 @@
-# Web Engineering & Design 3 - Client Side App (template source only)
+# Transaction Manager - Client Side App
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3.
 
