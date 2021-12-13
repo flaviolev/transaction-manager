@@ -1,4 +1,4 @@
-# Web Engineering & Design 3 - Node Server für Testat (Finance Portal)
+# Node Server (Finance Portal)
 
 ## Getting Started
 * [Node.js](https://nodejs.org/en/) LTS (14+) muss auf Ihrer Entwicklungsmaschine installiert sein.
