@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'transaction-manager'`, () => {
+  it(`should have as title 'Finance Manager'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('transaction-manager');
+    expect(app.title).toEqual('Finance Manager');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('transaction-manager app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('Finance Manager app is running!');
   });
 });
