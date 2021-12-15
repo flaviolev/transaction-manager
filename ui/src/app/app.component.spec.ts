@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ui'`, () => {
+  it(`should have as title 'transaction-manager'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ui');
+    expect(app.title).toEqual('transaction-manager');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ui app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('transaction-manager app is running!');
   });
 });
