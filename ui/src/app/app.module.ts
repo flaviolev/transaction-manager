@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { authInterceptorProviders } from './core/helpers/auth.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NewPaymentComponent } from './new-payment/new-payment.component';
+import { LatestTransactionsComponent } from './latest-transactions/latest-transactions.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    DashboardComponent
+    DashboardComponent,
+    NewPaymentComponent,
+    LatestTransactionsComponent
   ],
   imports: [
     BrowserModule,
