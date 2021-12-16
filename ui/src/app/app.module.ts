@@ -14,6 +14,7 @@ import { authInterceptorProviders } from './core/helpers/auth.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewPaymentComponent } from './new-payment/new-payment.component';
 import { LatestTransactionsComponent } from './latest-transactions/latest-transactions.component';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LatestTransactionsComponent } from './latest-transactions/latest-transa
     AppRoutingModule,
     NoopAnimationsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
