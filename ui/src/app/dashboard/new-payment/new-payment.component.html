@@ -1,1 +1,52 @@
-<mat-card>new-payment works!</mat-card>
+<mat-card>
+    <mat-card-title>New Payment</mat-card-title>
+    <mat-card-content>
+      <form
+        (ngSubmit)="onHandlePayment()"
+        autocomplete="off"
+      >
+        <mat-form-field>        
+            <mat-label>From</mat-label>
+          <input
+            matInput
+            placeholder="From"
+            type="text"
+            disabled
+            value=""
+          />
+        </mat-form-field>
+  <br>
+        <mat-form-field>
+            <mat-label>To</mat-label>
+          <input
+            matInput
+            placeholder="To"
+            type="text"
+            ngModel
+            autocomplete="off"
+            name="target"
+            #target
+            ng-model="target"
+          />
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Amount (CHF)</mat-label>
+          <input
+            matInput
+            placeholder="Amount (CHF)"
+            autocomplete="off"
+            ngModel
+            name="amount"
+            ng-pattern="/^\d+$/"
+            ng-model=""
+          />
+        </mat-form-field>
+        <br /><br />
+        <div>
+          <button mat-raised-button color="primary">Pay</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

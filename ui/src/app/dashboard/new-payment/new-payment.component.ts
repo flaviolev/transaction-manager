@@ -12,4 +12,7 @@ export class NewPaymentComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onHandlePayment() {
+    
+  }
 }
