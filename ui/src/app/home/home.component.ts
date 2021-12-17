@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../core/services/user.service';
+import { Component, OnInit } from '@angular/core'
+import { UserService } from '../core/user.service'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  content?: string;
+  content?: string
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.getPublicContent().subscribe(
-      data => {
-        this.content = data;
+      (data) => {
+        this.content = data
       },
-      err => {
-        this.content = JSON.parse(err.error).message;
-      }
-    );
+      (err) => {
+        this.content = JSON.parse(err.error).message
+      },
+    )
   }
 }
