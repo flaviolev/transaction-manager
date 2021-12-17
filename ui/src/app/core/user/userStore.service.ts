@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, filter, Observable } from 'rxjs'
+import { TokenStorageService } from '../auth/token-storage.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserStoreService {
-  constructor() {}
+  constructor(private tokenStorageService: TokenStorageService) {}
 
-  private user$ = new BehaviorSubject<any>(null)
+  private isLoggedIn$ = new BehaviorSubject<boolean>(this.hasToken())
 
-  setUser(user: any) {
-    this.user$.next(user)
+  setIsLoggedIn(login: boolean) {
+    this.isLoggedIn$.next(login)
   }
 
-  getUser(): Observable<any> {
-    return this.user$.asObservable().pipe(filter((user: any) => !!user))
+  getIsLoggedIn(): Observable<boolean> {
+    return this.isLoggedIn$.asObservable()
+  }
+  private hasToken(): boolean {
+    return !!this.tokenStorageService.getToken()
   }
 }
