@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 import { TokenStorageService } from './core/auth/token-storage.service'
 import { UserStoreService } from './core/user/userStore.service'
 
@@ -16,10 +17,17 @@ export class AppComponent implements OnInit {
   constructor(
     private tokenStorageService: TokenStorageService,
     private userStore: UserStoreService,
+    private route: Router,
   ) {}
 
   ngOnInit(): void {
-    this.userStore.getUser().subscribe((user) => console.log('user is', user))
+    this.userStore.getIsLoggedIn().subscribe((userStatus) => {
+      console.log('user is logged in ', userStatus)
+      this.isLoggedIn = userStatus
+      this.isLoggedIn
+        ? this.route.navigate(['/dashboard'])
+        : this.route.navigate(['/login'])
+    })
     this.isLoggedIn = !!this.tokenStorageService.getToken()
 
     if (this.isLoggedIn) {
@@ -32,6 +40,6 @@ export class AppComponent implements OnInit {
 
   logout(): void {
     this.tokenStorageService.signOut()
-    window.location.reload()
+    this.userStore.setIsLoggedIn(false)
   }
 }

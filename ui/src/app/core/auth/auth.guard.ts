@@ -9,13 +9,14 @@ import {
   UrlTree,
 } from '@angular/router'
 import { Observable } from 'rxjs'
-import { TokenStorageService } from './token-storage.service'
+import { UserStoreService } from '../user/userStore.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanLoad {
-  constructor(private tokenStorageService: TokenStorageService) {}
+  constructor(private userStore: UserStoreService) {}
+  isLoggedInVar: boolean = false
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -40,6 +41,9 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
 
   private isLoggedIn(): boolean {
-    return !!this.tokenStorageService.getToken()
+    this.userStore
+      .getIsLoggedIn()
+      .subscribe((userStatus) => (this.isLoggedInVar = userStatus))
+    return this.isLoggedInVar
   }
 }
