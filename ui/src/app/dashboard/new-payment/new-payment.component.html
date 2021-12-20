@@ -25,6 +25,7 @@
             type="text"
             autocomplete="off"
           />
+          <mat-error *ngIf="!newPaymentForm.get('to')!.errors?.['userExist']">User does not exists!</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field>
