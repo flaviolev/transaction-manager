@@ -4,48 +4,42 @@
       <form
         (ngSubmit)="onHandlePayment()"
         autocomplete="off"
+        [formGroup]="newPaymentForm" 
       >
         <mat-form-field>        
             <mat-label>From</mat-label>
           <input
+          formControlName="from"
             matInput
             placeholder="From"
             type="text"
-            disabled
-            value={{currentUser}}
           />
         </mat-form-field>
   <br>
         <mat-form-field>
             <mat-label>To</mat-label>
           <input
+          formControlName="to"
             matInput
             placeholder="To"
             type="text"
-            ngModel
             autocomplete="off"
-            name="target"
-            #target
-            ng-model="target"
           />
         </mat-form-field>
         <br>
         <mat-form-field>
             <mat-label>Amount (CHF)</mat-label>
           <input
+          formControlName="amount"
             matInput
             placeholder="Amount (CHF)"
             autocomplete="off"
-            ngModel
             type="number"
-            name="amount"
-            ng-pattern="/^\d+$/"
-            ng-model=""
           />
         </mat-form-field>
         <br /><br />
         <div>
-          <button mat-raised-button color="primary">Pay</button>
+          <button mat-raised-button color="primary" [disabled]="!newPaymentForm.valid">Pay</button>
         </div>
       </form>
     </mat-card-content>
