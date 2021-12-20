@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { TokenStorageService } from '../../core/auth/token-storage.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { UserService } from 'src/app/core/user.service'
 
 @Component({
   selector: 'app-new-payment',
@@ -11,7 +12,10 @@ export class NewPaymentComponent implements OnInit {
   currentUser: string | undefined
   newPaymentForm!: FormGroup
 
-  constructor(private tokenStorageService: TokenStorageService) {}
+  constructor(
+    private tokenStorageService: TokenStorageService,
+    private userService: UserService,
+  ) {}
 
   ngOnInit(): void {
     const user = this.tokenStorageService.getUser()
@@ -25,5 +29,10 @@ export class NewPaymentComponent implements OnInit {
     })
   }
 
-  onHandlePayment() {}
+  onHandlePayment() {
+    const to = this.newPaymentForm.get('to')
+    this.userService
+      .existsUser(to?.value)
+      .subscribe((result) => console.log('user exist', result))
+  }
 }
