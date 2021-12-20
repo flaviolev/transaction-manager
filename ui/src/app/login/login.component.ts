@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { AuthService } from '../core/auth/auth.service'
 import { TokenStorageService } from '../core/auth/token-storage.service'
-import { Router, RouterModule } from '@angular/router'
 import { UserStoreService } from '../core/user/userStore.service'
 
 @Component({
@@ -17,12 +16,10 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false
   isLoginFailed = false
   errorMessage = ''
-  roles: string[] = []
 
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
-    private route: Router,
     private userStore: UserStoreService,
   ) {}
 
@@ -30,7 +27,6 @@ export class LoginComponent implements OnInit {
     this.userStore.getIsLoggedIn().subscribe((userStatus) => {
       console.log('user is logged in ', userStatus)
       this.isLoggedIn = userStatus
-      if (this.isLoggedIn) this.roles = this.tokenStorage.getUser().roles
     })
   }
 
@@ -39,11 +35,9 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(username, password).subscribe(
       (data) => {
-        this.tokenStorage.saveToken(data.accessToken)
-        this.tokenStorage.saveUser(data)
+        this.tokenStorage.saveToken(data)
 
         this.isLoginFailed = false
-        this.roles = this.tokenStorage.getUser().roles
         this.userStore.setIsLoggedIn(true)
       },
       (err) => {
