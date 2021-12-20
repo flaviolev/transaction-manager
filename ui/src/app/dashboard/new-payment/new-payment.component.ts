@@ -48,10 +48,5 @@ export class NewPaymentComponent implements OnInit {
       )
     }
   }
-  onHandlePayment() {
-    const to = this.newPaymentForm.get('to')
-    this.userService
-      .existsUser(to?.value)
-      .subscribe((result) => console.log('user exist', result))
-  }
+  onHandlePayment() {}
 }
