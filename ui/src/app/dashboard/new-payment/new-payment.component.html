@@ -12,7 +12,7 @@
             placeholder="From"
             type="text"
             disabled
-            value=""
+            value={{currentUser}}
           />
         </mat-form-field>
   <br>
@@ -37,6 +37,7 @@
             placeholder="Amount (CHF)"
             autocomplete="off"
             ngModel
+            type="number"
             name="amount"
             ng-pattern="/^\d+$/"
             ng-model=""
