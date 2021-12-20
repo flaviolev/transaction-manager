@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component'
 import { LatestTransactionsComponent } from './latest-transactions/latest-transactions.component'
 import { NewPaymentComponent } from './new-payment/new-payment.component'
 import { SharedModule } from '../shared/shared.module'
+import { ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -11,7 +12,7 @@ import { SharedModule } from '../shared/shared.module'
     NewPaymentComponent,
     LatestTransactionsComponent,
   ],
-  imports: [SharedModule, BrowserModule],
+  imports: [SharedModule, BrowserModule, ReactiveFormsModule],
   exports: [
     DashboardComponent,
     NewPaymentComponent,
