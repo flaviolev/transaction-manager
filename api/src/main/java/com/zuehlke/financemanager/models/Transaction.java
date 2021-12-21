@@ -32,4 +32,13 @@ public class Transaction {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Transaction(Long id, String source, String target, Long amount, Date createdAt,User user) {
+        this.id=id;
+        this.source=source;
+        this.target=target;
+        this.amount=amount;
+        this.createdAt=createdAt;
+        this.user=user;
+    }
+
 }
