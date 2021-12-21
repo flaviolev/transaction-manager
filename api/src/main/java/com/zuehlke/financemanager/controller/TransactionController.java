@@ -1,4 +1,6 @@
 package com.zuehlke.financemanager.controller;
+
+import com.zuehlke.financemanager.exception.AmountExceedBalanceException;
 import com.zuehlke.financemanager.models.Transaction;
 import com.zuehlke.financemanager.payload.response.MessageResponse;
 import com.zuehlke.financemanager.service.TransactionService;
@@ -7,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -28,11 +29,19 @@ public class TransactionController {
         return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
     }
 
-
     @PostMapping
-    public ResponseEntity<?> addTransaction( @RequestBody Transaction transaction) {
-        transactionService.addTransaction(transaction);
-        return ok(new MessageResponse("Transaction created successfully!"));
+    @ExceptionHandler(AmountExceedBalanceException.class)
+    public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) throws AmountExceedBalanceException {
+        try {
+            transactionService.addTransaction(transaction);
+            return ok(new MessageResponse("Transaction created successfully!"));
+        } catch (AmountExceedBalanceException exception) {
+
+            return ResponseEntity
+                    .status(HttpStatus.NOT_ACCEPTABLE)
+                    .body(exception.getMessage());
+
+        }
 
 
     }
