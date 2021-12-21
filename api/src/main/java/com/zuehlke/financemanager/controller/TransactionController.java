@@ -1,26 +1,40 @@
 package com.zuehlke.financemanager.controller;
-
 import com.zuehlke.financemanager.models.Transaction;
-import com.zuehlke.financemanager.repository.TransactionRepository;
-import com.zuehlke.financemanager.repository.UserRepository;
+import com.zuehlke.financemanager.payload.response.MessageResponse;
+import com.zuehlke.financemanager.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/transaction")
 public class TransactionController {
+
+
     @Autowired
-    TransactionRepository transactionRepository;
+    TransactionService transactionService;
 
 
     @GetMapping
-        public List<Transaction> getAllTrasactions() {
-        return transactionRepository.findAll();
-
+    public ResponseEntity<List<Transaction>> getAllTransactions() {
+        List<Transaction> transactions = transactionService.getAllTransactions();
+        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
     }
 
+
+    @PostMapping
+    public ResponseEntity<?> addTransaction( @RequestBody Transaction transaction) {
+        transactionService.addTransaction(transaction);
+        return ok(new MessageResponse("Transaction created successfully!"));
+
+
+    }
 
 }
