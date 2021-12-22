@@ -1,6 +1,7 @@
 package com.zuehlke.financemanager.controller;
 
 import com.zuehlke.financemanager.exception.AmountExceedBalanceException;
+import com.zuehlke.financemanager.exception.SameUserTransactionNotAllowedException;
 import com.zuehlke.financemanager.models.Transaction;
 import com.zuehlke.financemanager.payload.response.MessageResponse;
 import com.zuehlke.financemanager.service.TransactionService;
@@ -31,15 +32,24 @@ public class TransactionController {
 
     @PostMapping
     @ExceptionHandler(AmountExceedBalanceException.class)
-    public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) throws AmountExceedBalanceException {
+    public ResponseEntity<?> addTransaction(@RequestBody Transaction transaction) throws AmountExceedBalanceException, SameUserTransactionNotAllowedException {
         try {
             transactionService.addTransaction(transaction);
             return ok(new MessageResponse("Transaction created successfully!"));
-        } catch (AmountExceedBalanceException exception) {
+        } catch (AmountExceedBalanceException amountExceedBalanceException) {
 
             return ResponseEntity
                     .status(HttpStatus.NOT_ACCEPTABLE)
-                    .body(exception.getMessage());
+                    .body(amountExceedBalanceException.getMessage());
+
+
+        }
+        catch (SameUserTransactionNotAllowedException sameUserTransactionNotAllowedException) {
+
+            return ResponseEntity
+                    .status(HttpStatus.NOT_ACCEPTABLE)
+                    .body(sameUserTransactionNotAllowedException.getMessage());
+
 
         }
 
