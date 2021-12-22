@@ -1,12 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-export interface Transaction {
-  source: string;
-  target: string;
-  amount: number;
-  balance: number;
-  creationDate: Date;
-}
+import { Transaction } from '../core/transaction/transaction';
 
 const TEST_DATA: Transaction[] = [
   {source: "user1", target: 'user2', amount: 1079, balance: 179, creationDate: new Date()},

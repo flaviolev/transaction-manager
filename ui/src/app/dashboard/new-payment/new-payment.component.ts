@@ -8,8 +8,10 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms'
-import { UserService } from 'src/app/core/user.service'
-import { catchError, map, Observable } from 'rxjs'
+import { UserService } from 'src/app/core/user/user.service'
+import { catchError, from, map, Observable } from 'rxjs'
+import { TransactionService } from 'src/app/core/transaction/transaction.service'
+import { Transaction } from 'src/app/core/transaction/transaction'
 
 @Component({
   selector: 'app-new-payment',
@@ -22,7 +24,7 @@ export class NewPaymentComponent implements OnInit {
 
   constructor(
     private tokenStorageService: TokenStorageService,
-    private userService: UserService,
+    private userService: UserService, private transactionService: TransactionService,
   ) {}
 
   ngOnInit(): void {
@@ -48,5 +50,15 @@ export class NewPaymentComponent implements OnInit {
       )
     }
   }
-  onHandlePayment() {}
+
+  onSave() {
+    let transaction: Transaction={
+      source: this.newPaymentForm.get('from')?.value,
+      target: this.newPaymentForm.get('to')?.value,
+      amount: this.newPaymentForm.get('amount')?.value,
+    } ;
+    console.log("transaction",transaction)
+    
+    this.transactionService.createTransaction(transaction).subscribe(res=>console.log(res))
+  }
 }
