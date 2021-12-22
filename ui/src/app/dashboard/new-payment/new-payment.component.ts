@@ -6,6 +6,7 @@ import {
   FormControl,
   FormGroup,
   ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms'
 import { UserService } from 'src/app/core/user/user.service'
@@ -24,7 +25,8 @@ export class NewPaymentComponent implements OnInit {
 
   constructor(
     private tokenStorageService: TokenStorageService,
-    private userService: UserService, private transactionService: TransactionService,
+    private userService: UserService,
+    private transactionService: TransactionService,
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +37,7 @@ export class NewPaymentComponent implements OnInit {
         Validators.required,
       ]),
       to: new FormControl('', {
-        validators: [Validators.required],
+        validators: [Validators.required, this.selfTransactionValidator()],
         asyncValidators: [this.userExistsValidator()],
       }),
       amount: new FormControl(null, [Validators.required]),
@@ -51,14 +53,23 @@ export class NewPaymentComponent implements OnInit {
     }
   }
 
+  selfTransactionValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null =>
+      control.value?.toLowerCase() !== this.currentUser?.toLowerCase()
+        ? null
+        : { selfTransaction: false }
+  }
+
   onSave() {
-    let transaction: Transaction={
+    let transaction: Transaction = {
       source: this.newPaymentForm.get('from')?.value,
       target: this.newPaymentForm.get('to')?.value,
       amount: this.newPaymentForm.get('amount')?.value,
-    } ;
-    console.log("transaction",transaction)
-    
-    this.transactionService.createTransaction(transaction).subscribe(res=>console.log(res))
+    }
+    console.log('transaction', transaction)
+
+    this.transactionService
+      .createTransaction(transaction)
+      .subscribe((res) => console.log(res))
   }
 }
