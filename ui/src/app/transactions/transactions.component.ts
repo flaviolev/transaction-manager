@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Transaction } from '../core/transaction/transaction'
 import { TransactionService } from '../core/transaction/transaction.service'
+import { TokenStorageService } from '../core/auth/token-storage.service'
 
 @Component({
   selector: 'app-transactions',
@@ -17,12 +18,18 @@ export class TransactionsComponent implements OnInit {
     'creationDate',
   ]
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(
+    private transactionService: TransactionService,
+    private tokenStorageService: TokenStorageService,
+  ) {}
 
   ngOnInit(): void {
-    this.transactionService.getTransactions().subscribe((res) => {
-      console.log(res)
-      this.transactions = res
-    })
+    let currentUsername = this.tokenStorageService.getUser()?.username
+    console.log('CUR USER', currentUsername)
+    this.transactionService
+      .getTransactionsByUsername(currentUsername)
+      .subscribe((res) => {
+        this.transactions = res
+      })
   }
 }
