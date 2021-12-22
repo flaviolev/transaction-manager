@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -24,10 +25,10 @@ public class TransactionController {
     TransactionService transactionService;
 
 
-    @GetMapping
-    public ResponseEntity<List<Transaction>> getAllTransactions() {
-        List<Transaction> transactions = transactionService.getAllTransactions();
-        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+    @GetMapping("{username}")
+    public ResponseEntity<List<Transaction>> getAllTransactions(@PathVariable String username) {
+        Optional<List<Transaction>> transactions = transactionService.getAllTransactionsByUsername(username);
+        return new ResponseEntity<>(transactions.get(), HttpStatus.OK);
     }
 
     @PostMapping
