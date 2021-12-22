@@ -21,4 +21,7 @@ export class TransactionService {
     return this.http.post(AUTH_API, transaction, httpOptions);
   }
 
+  getTransactions(): Observable<any> {
+    return this.http.get(AUTH_API, httpOptions);
+  }
 }

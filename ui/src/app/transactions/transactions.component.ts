@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Transaction } from '../core/transaction/transaction';
+import { TransactionService } from '../core/transaction/transaction.service';
 
 const TEST_DATA: Transaction[] = [
   {source: "user1", target: 'user2', amount: 1079, balance: 179, creationDate: new Date()},
@@ -16,9 +17,9 @@ export class TransactionsComponent implements OnInit {
   transactions: Transaction[] = TEST_DATA;  
   displayedColumns: string[] = ['source', 'target', 'amount', 'balance', 'creationDate'];
   
-  constructor() { }
+  constructor(private transactionService: TransactionService) { }
 
   ngOnInit(): void {
+    this.transactionService.getTransactions().subscribe((res)=>this.transactions=res)
   }
-
 }
