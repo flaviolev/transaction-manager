@@ -2,7 +2,7 @@
     <mat-card-title>New Payment</mat-card-title>
     <mat-card-content>
       <form
-        (ngSubmit)="onHandlePayment()"
+        (ngSubmit)="onSave()"
         autocomplete="off"
         [formGroup]="newPaymentForm" 
       >
@@ -15,7 +15,7 @@
             type="text"
           />
         </mat-form-field>
-  <br>
+        <br>
         <mat-form-field>
             <mat-label>To</mat-label>
           <input
@@ -40,7 +40,7 @@
         </mat-form-field>
         <br /><br />
         <div>
-          <button mat-raised-button color="primary" [disabled]="!newPaymentForm.valid">Pay</button>
+          <button mat-raised-button color="primary" [disabled]="!newPaymentForm.valid" type="submit">Pay</button>
         </div>
       </form>
     </mat-card-content>
