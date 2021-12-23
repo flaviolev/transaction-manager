@@ -11,8 +11,7 @@ import { RegisterComponent } from './register/register.component'
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { authInterceptorProviders } from './core/auth/auth.interceptor'
-import { DashboardModule } from './dashboard/dashboard.module';
-import { TransactionsComponent } from './transactions/transactions.component'
+import { DashboardModule } from './dashboard/dashboard.module'
 import { SharedModule } from './shared/shared.module'
 
 @NgModule({
@@ -22,7 +21,6 @@ import { SharedModule } from './shared/shared.module'
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    TransactionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +29,7 @@ import { SharedModule } from './shared/shared.module'
     FormsModule,
     HttpClientModule,
     DashboardModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],
