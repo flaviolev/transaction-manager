@@ -25,7 +25,6 @@
             type="text"
             autocomplete="off"
           />
-          <p>{{newPaymentForm.get('to')!.errors}}</p>
           <mat-error *ngIf="newPaymentForm.get('to')!.errors?.['userExist']">User does not exists!</mat-error>
           <mat-error *ngIf="newPaymentForm.get('to')!.errors?.['required']">Required field</mat-error>
           <mat-error *ngIf="newPaymentForm.get('to')!.errors?.['selfTransaction']==true">Cannot perform transaction on yourself!</mat-error>
