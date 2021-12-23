@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
-import { TokenStorageService } from '../../core/auth/token-storage.service'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -11,7 +10,6 @@ import {
 } from '@angular/forms'
 import { UserService } from 'src/app/core/user/user.service'
 import { catchError, from, map, Observable } from 'rxjs'
-import { TransactionService } from 'src/app/core/transaction/transaction.service'
 import { Transaction } from 'src/app/core/transaction/transaction'
 
 @Component({
@@ -22,13 +20,11 @@ import { Transaction } from 'src/app/core/transaction/transaction'
 export class NewPaymentComponent implements OnInit {
   newPaymentForm!: FormGroup
 
-  constructor(
-    private userService: UserService,
-    private transactionService: TransactionService,
-  ) {}
+  constructor(private userService: UserService) {}
 
   @Input() balance = 0
   @Input() user: any
+  @Output() saveTransaction = new EventEmitter<Transaction>()
 
   ngOnInit(): void {
     this.newPaymentForm = new FormGroup({
@@ -65,14 +61,11 @@ export class NewPaymentComponent implements OnInit {
 
   onSave() {
     let transaction: Transaction = {
-      source: this.newPaymentForm.get('from')?.value,
+      source: this.user,
       target: this.newPaymentForm.get('to')?.value,
       amount: this.newPaymentForm.get('amount')?.value,
     }
-    console.log('transaction', transaction)
 
-    this.transactionService
-      .createTransaction(transaction)
-      .subscribe((res) => console.log(res))
+    this.saveTransaction.emit(transaction)
   }
 }
