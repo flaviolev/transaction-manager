@@ -11,13 +11,6 @@ import { Router } from '@angular/router'
 })
 export class TransactionsComponent implements OnInit {
   transactions: Transaction[] = []
-  displayedColumns: string[] = [
-    'source',
-    'target',
-    'amount',
-    'balance',
-    'creationDate',
-  ]
 
   constructor(
     private transactionService: TransactionService,
@@ -28,6 +21,10 @@ export class TransactionsComponent implements OnInit {
   @Input() showButton: boolean = false
 
   ngOnInit(): void {
+    this.getTransactions()
+  }
+
+  getTransactions() {
     this.transactionService.getTransactionsByUsername().subscribe((res) => {
       this.transactions = this.fetchSize
         ? sortByDate(res).slice(0, this.fetchSize)
