@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { Transaction } from '../core/transaction/transaction'
 import { TransactionService } from '../core/transaction/transaction.service'
 import { TokenStorageService } from '../core/auth/token-storage.service'
-import { first, map, pipe, take, tap } from 'rxjs'
+import { map } from 'rxjs'
 
 @Component({
   selector: 'app-transactions',
@@ -32,11 +32,7 @@ export class TransactionsComponent implements OnInit {
 
     this.transactionService
       .getTransactionsByUsername(currentUsername)
-      .pipe(
-        map((x) => (this.fetchSize ? x.slice(0, this.fetchSize) : x)),
-
-        tap((res: any) => console.log('tap', res)),
-      )
+      .pipe(map((x) => (this.fetchSize ? x.slice(0, this.fetchSize) : x)))
       .subscribe((res) => {
         this.transactions = res
       })

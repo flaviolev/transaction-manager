@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Subscription } from 'rxjs'
 import { AuthService } from '../core/auth/auth.service'
 import { TokenStorageService } from '../core/auth/token-storage.service'
 import { UserStoreService } from '../core/user/userStore.service'
@@ -8,7 +9,7 @@ import { UserStoreService } from '../core/user/userStore.service'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   form: any = {
     username: null,
     password: null,
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false
   isLoginFailed = false
   errorMessage = ''
-
+  subscription: Subscription | undefined
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
@@ -24,10 +25,12 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userStore.getIsLoggedIn().subscribe((userStatus) => {
-      console.log('user is logged in ', userStatus)
-      this.isLoggedIn = userStatus
-    })
+    this.subscription = this.userStore
+      .getIsLoggedIn()
+      .subscribe((userStatus) => {
+        console.log('user is logged in ', userStatus)
+        this.isLoggedIn = userStatus
+      })
   }
 
   onSubmit(): void {
@@ -45,5 +48,9 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true
       },
     )
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe()
   }
 }
