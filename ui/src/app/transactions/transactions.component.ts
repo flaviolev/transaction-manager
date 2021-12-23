@@ -3,6 +3,7 @@ import { Transaction } from '../core/transaction/transaction'
 import { TransactionService } from '../core/transaction/transaction.service'
 import { TokenStorageService } from '../core/auth/token-storage.service'
 import { map } from 'rxjs'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-transactions',
@@ -22,13 +23,14 @@ export class TransactionsComponent implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private tokenStorageService: TokenStorageService,
+    private router: Router,
   ) {}
 
   @Input() fetchSize: number = 0
+  @Input() showButton: boolean = false
 
   ngOnInit(): void {
     let currentUsername = this.tokenStorageService.getUser()?.username
-    console.log('CUR USER', currentUsername)
 
     this.transactionService
       .getTransactionsByUsername(currentUsername)
@@ -36,5 +38,9 @@ export class TransactionsComponent implements OnInit {
       .subscribe((res) => {
         this.transactions = res
       })
+  }
+
+  goToTransationsPage() {
+    this.router.navigate(['/transactions'])
   }
 }
