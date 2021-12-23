@@ -15,4 +15,8 @@ export class UserService {
   existsUser(username: string): Observable<boolean> {
     return this.http.get<boolean>(`${API_URL}${username}`, httpOptions)
   }
+
+  getBalance(): Observable<number> {
+    return this.http.get<number>(`${API_URL}balance`, httpOptions)
+  }
 }

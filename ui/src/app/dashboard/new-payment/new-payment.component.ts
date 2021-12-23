@@ -22,7 +22,7 @@ import { Transaction } from 'src/app/core/transaction/transaction'
 export class NewPaymentComponent implements OnInit {
   currentUser: string | undefined
   newPaymentForm!: FormGroup
-
+  balance: number | undefined
   constructor(
     private tokenStorageService: TokenStorageService,
     private userService: UserService,
@@ -30,12 +30,21 @@ export class NewPaymentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userService.getBalance().subscribe((bal) => {
+      console.log('balance', bal)
+      this.balance = bal
+    })
+
     const user = this.tokenStorageService.getUser()
     this.currentUser = user.username
     this.newPaymentForm = new FormGroup({
-      from: new FormControl({ value: this.currentUser!, disabled: true }, [
-        Validators.required,
-      ]),
+      from: new FormControl(
+        {
+          value: '',
+          disabled: true,
+        },
+        [Validators.required],
+      ),
       to: new FormControl('', {
         validators: [Validators.required, this.selfTransactionValidator()],
         asyncValidators: [this.userExistsValidator()],
