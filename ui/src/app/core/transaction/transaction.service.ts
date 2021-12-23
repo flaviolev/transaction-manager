@@ -19,7 +19,7 @@ export class TransactionService {
     return this.http.post(TX_API, transaction, httpOptions)
   }
 
-  getTransactionsByUsername(username: string): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(`${TX_API}${username}`, httpOptions)
+  getTransactionsByUsername(): Observable<Transaction[]> {
+    return this.http.get<Transaction[]>(TX_API, httpOptions)
   }
 }

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Transaction } from '../core/transaction/transaction'
 import { TransactionService } from '../core/transaction/transaction.service'
-import { TokenStorageService } from '../core/auth/token-storage.service'
 import { map } from 'rxjs'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-transactions',
@@ -21,20 +21,28 @@ export class TransactionsComponent implements OnInit {
 
   constructor(
     private transactionService: TransactionService,
-    private tokenStorageService: TokenStorageService,
+    private router: Router,
   ) {}
 
   @Input() fetchSize: number = 0
+  @Input() showButton: boolean = false
 
   ngOnInit(): void {
-    let currentUsername = this.tokenStorageService.getUser()?.username
-    console.log('CUR USER', currentUsername)
+    this.transactionService.getTransactionsByUsername().subscribe((res) => {
+      this.transactions = this.fetchSize
+        ? sortByDate(res).slice(0, this.fetchSize)
+        : sortByDate(res)
 
-    this.transactionService
-      .getTransactionsByUsername(currentUsername)
-      .pipe(map((x) => (this.fetchSize ? x.slice(0, this.fetchSize) : x)))
-      .subscribe((res) => {
-        this.transactions = res
-      })
+      function sortByDate(transaction: Transaction[]): Transaction[] {
+        return transaction.sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        )
+      }
+    })
+  }
+
+  goToTransationsPage() {
+    this.router.navigate(['/transactions'])
   }
 }
