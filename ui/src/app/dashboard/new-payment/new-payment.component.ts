@@ -47,7 +47,7 @@ export class NewPaymentComponent implements OnInit {
   userExistsValidator(): AsyncValidatorFn {
     return (to: AbstractControl): Observable<ValidationErrors | null> => {
       return this.userService.existsUser(to?.value).pipe(
-        map((exists) => (exists ? null : { userExist: false })),
+        map((exists) => (exists ? null : { userExist: true })),
         catchError(async (err) => null),
       )
     }
@@ -57,7 +57,7 @@ export class NewPaymentComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: any } | null =>
       control.value?.toLowerCase() !== this.currentUser?.toLowerCase()
         ? null
-        : { selfTransaction: false }
+        : { selfTransaction: true }
   }
 
   onSave() {
