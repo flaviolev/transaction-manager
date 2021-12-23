@@ -21,6 +21,10 @@ export class TransactionsComponent implements OnInit {
   @Input() showButton: boolean = false
 
   ngOnInit(): void {
+    this.getTransactions()
+  }
+
+  getTransactions() {
     this.transactionService.getTransactionsByUsername().subscribe((res) => {
       this.transactions = this.fetchSize
         ? sortByDate(res).slice(0, this.fetchSize)

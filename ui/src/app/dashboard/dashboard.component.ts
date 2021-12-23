@@ -30,6 +30,6 @@ export class DashboardComponent implements OnInit {
   onSaveTransaction(newTransaction: any) {
     this.transactionService
       .createTransaction(newTransaction)
-      .subscribe((res) => console.log(res))
+      .subscribe((res) => window.location.reload())
   }
 }
