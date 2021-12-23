@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { TokenStorageService } from '../../core/auth/token-storage.service'
 import {
   AbstractControl,
@@ -22,19 +22,16 @@ import { Transaction } from 'src/app/core/transaction/transaction'
 export class NewPaymentComponent implements OnInit {
   currentUser: string | undefined
   newPaymentForm!: FormGroup
-  balance: number | undefined
+
   constructor(
     private tokenStorageService: TokenStorageService,
     private userService: UserService,
     private transactionService: TransactionService,
   ) {}
 
-  ngOnInit(): void {
-    this.userService.getBalance().subscribe((bal) => {
-      console.log('balance', bal)
-      this.balance = bal
-    })
+  @Input() balance = 0
 
+  ngOnInit(): void {
     const user = this.tokenStorageService.getUser()
     this.currentUser = user.username
     this.newPaymentForm = new FormGroup({
