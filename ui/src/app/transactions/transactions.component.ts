@@ -28,12 +28,18 @@ export class TransactionsComponent implements OnInit {
   @Input() showButton: boolean = false
 
   ngOnInit(): void {
-    this.transactionService
-      .getTransactionsByUsername()
-      .pipe(map((x) => (this.fetchSize ? x.slice(0, this.fetchSize) : x)))
-      .subscribe((res) => {
-        this.transactions = res
-      })
+    this.transactionService.getTransactionsByUsername().subscribe((res) => {
+      this.transactions = this.fetchSize
+        ? sortByDate(res).slice(0, this.fetchSize)
+        : sortByDate(res)
+
+      function sortByDate(transaction: Transaction[]): Transaction[] {
+        return transaction.sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        )
+      }
+    })
   }
 
   goToTransationsPage() {
