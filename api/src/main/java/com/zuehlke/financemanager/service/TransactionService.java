@@ -7,6 +7,8 @@ import com.zuehlke.financemanager.models.User;
 import com.zuehlke.financemanager.repository.TransactionRepository;
 import com.zuehlke.financemanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +26,12 @@ public class TransactionService {
     @Autowired
     TransactionRepository transactionRepository;
 
-    public Optional<List<Transaction>> getAllTransactionsByUsername(String sourceUsername) {
-        Optional<User> currentUser = userRepository.findByUsername(sourceUsername);
+    public Optional<List<Transaction>> getAllTransactionsByUsername() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        Optional<User> currentUser = userRepository.findByUsername(currentPrincipalName);
         if (currentUser.isPresent()) {
             Long currentId = currentUser.get().getId();
             return transactionRepository.findByUserId(currentId);

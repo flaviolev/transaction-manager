@@ -25,9 +25,9 @@ public class TransactionController {
     TransactionService transactionService;
 
 
-    @GetMapping("{username}")
-    public ResponseEntity<List<Transaction>> getAllTransactions(@PathVariable String username) {
-        Optional<List<Transaction>> transactions = transactionService.getAllTransactionsByUsername(username);
+    @GetMapping()
+    public ResponseEntity<List<Transaction>> getAllTransactions() {
+        Optional<List<Transaction>> transactions = transactionService.getAllTransactionsByUsername();
         return new ResponseEntity<>(transactions.get(), HttpStatus.OK);
     }
 

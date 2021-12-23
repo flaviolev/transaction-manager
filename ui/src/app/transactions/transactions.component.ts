@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Transaction } from '../core/transaction/transaction'
 import { TransactionService } from '../core/transaction/transaction.service'
-import { TokenStorageService } from '../core/auth/token-storage.service'
 import { map } from 'rxjs'
 import { Router } from '@angular/router'
 
@@ -22,7 +21,6 @@ export class TransactionsComponent implements OnInit {
 
   constructor(
     private transactionService: TransactionService,
-    private tokenStorageService: TokenStorageService,
     private router: Router,
   ) {}
 
@@ -30,10 +28,8 @@ export class TransactionsComponent implements OnInit {
   @Input() showButton: boolean = false
 
   ngOnInit(): void {
-    let currentUsername = this.tokenStorageService.getUser()?.username
-
     this.transactionService
-      .getTransactionsByUsername(currentUsername)
+      .getTransactionsByUsername()
       .pipe(map((x) => (this.fetchSize ? x.slice(0, this.fetchSize) : x)))
       .subscribe((res) => {
         this.transactions = res
