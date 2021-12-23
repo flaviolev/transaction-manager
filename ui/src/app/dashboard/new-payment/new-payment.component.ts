@@ -20,20 +20,17 @@ import { Transaction } from 'src/app/core/transaction/transaction'
   styleUrls: ['./new-payment.component.css'],
 })
 export class NewPaymentComponent implements OnInit {
-  currentUser: string | undefined
   newPaymentForm!: FormGroup
 
   constructor(
-    private tokenStorageService: TokenStorageService,
     private userService: UserService,
     private transactionService: TransactionService,
   ) {}
 
   @Input() balance = 0
+  @Input() user: any
 
   ngOnInit(): void {
-    const user = this.tokenStorageService.getUser()
-    this.currentUser = user.username
     this.newPaymentForm = new FormGroup({
       from: new FormControl(
         {
@@ -61,7 +58,7 @@ export class NewPaymentComponent implements OnInit {
 
   selfTransactionValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null =>
-      control.value?.toLowerCase() !== this.currentUser?.toLowerCase()
+      control.value?.toLowerCase() !== this.user?.toLowerCase()
         ? null
         : { selfTransaction: true }
   }

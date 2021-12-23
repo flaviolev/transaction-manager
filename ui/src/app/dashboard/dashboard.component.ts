@@ -10,11 +10,17 @@ import { UserService } from '../core/user/user.service'
 })
 export class DashboardComponent implements OnInit {
   currentBalance = 0
-  constructor(private userService: UserService) {}
+  currentUser: any
+  constructor(
+    private userService: UserService,
+    private tokenStorageService: TokenStorageService,
+  ) {}
 
   ngOnInit(): void {
     this.userService.getBalance().subscribe((bal) => {
       this.currentBalance = bal
     })
+    const user = this.tokenStorageService.getUser()
+    this.currentUser = user.username
   }
 }
