@@ -11,13 +11,6 @@ import { Router } from '@angular/router'
 })
 export class TransactionsComponent implements OnInit {
   transactions: Transaction[] = []
-  displayedColumns: string[] = [
-    'source',
-    'target',
-    'amount',
-    'balance',
-    'creationDate',
-  ]
 
   constructor(
     private transactionService: TransactionService,
