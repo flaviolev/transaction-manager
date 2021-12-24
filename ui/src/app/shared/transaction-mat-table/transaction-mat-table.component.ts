@@ -8,6 +8,7 @@ import { Transaction } from '../../core/transaction/transaction'
   styleUrls: ['./transaction-mat-table.component.css'],
 })
 export class TransactionMatTableComponent implements OnInit {
+  searchText: string = ''
   displayedColumns: string[] = [
     'source',
     'target',
@@ -18,6 +19,7 @@ export class TransactionMatTableComponent implements OnInit {
   @Input() transactions: Transaction[] = []
   @Input() fetchSize: number = 0
   @Input() showButton: boolean = false
+  @Input() showFilter: boolean = false
 
   constructor(private router: Router) {}
 

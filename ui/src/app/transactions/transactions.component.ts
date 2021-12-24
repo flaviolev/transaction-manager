@@ -19,6 +19,7 @@ export class TransactionsComponent implements OnInit {
 
   @Input() fetchSize: number = 0
   @Input() showButton: boolean = false
+  @Input() showFilter: boolean = true
 
   ngOnInit(): void {
     this.getTransactions()
