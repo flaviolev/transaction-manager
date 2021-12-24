@@ -4,6 +4,7 @@ import { TransactionService } from '../core/transaction/transaction.service'
 import { UserService } from '../core/user/user.service'
 import { Transaction } from '../core/transaction/transaction'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { NewTransactionSharingService } from '../core/transaction/newTransactionSharing.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private transactionService: TransactionService,
     private _snackBar: MatSnackBar,
+    private newTransactionSharingService: NewTransactionSharingService,
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +39,8 @@ export class DashboardComponent implements OnInit {
           duration: 1500,
           panelClass: ['snackbar-success'],
         })
-        window.location.reload()
+        this.newTransactionSharingService.setIsNewTransaction(true)
+        //window.location.reload()
       })
   }
 }
