@@ -14,3 +14,9 @@ body {
   width: 100%;
   margin-top: 5px;
 }
+.snackbar-success {
+  background-color: rgb(85, 175, 85);
+}
+.snackbar-fail {
+  background-color: rgb(216, 67, 67);
+}

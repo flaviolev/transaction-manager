@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { Router } from '@angular/router'
 import { AuthService } from '../core/auth/auth.service'
 
@@ -14,7 +15,11 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false
   errorMessage = ''
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private _snackBar: MatSnackBar,
+  ) {
     this.registerForm = new FormGroup({
       username: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -38,6 +43,10 @@ export class RegisterComponent implements OnInit {
         (data) => {
           console.log(data)
           this.isSuccessful = true
+          this._snackBar.open('user registered successfully', 'Close', {
+            duration: 1500,
+            panelClass: ['snackbar-success'],
+          })
           this.isSignUpFailed = false
           this.router.navigate(['/login'])
         },

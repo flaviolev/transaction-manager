@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar'
 import { Subscription } from 'rxjs'
 import { AuthService } from '../core/auth/auth.service'
 import { TokenStorageService } from '../core/auth/token-storage.service'
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
     private userStore: UserStoreService,
+    private _snackBar: MatSnackBar,
   ) {
     this.loginForm = new FormGroup({
       username: new FormControl(null, [Validators.required]),
@@ -48,8 +50,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.isLoginFailed = false
         this.userStore.setIsLoggedIn(true)
+        this._snackBar.open('user successfully logged in', 'Close', {
+          duration: 1500,
+          panelClass: ['snackbar-success'],
+        })
       },
       (err) => {
+        this._snackBar.open(err.error.message, 'Close', {
+          duration: 1500,
+          panelClass: ['snackbar-fail'],
+        })
         this.errorMessage = err.error.message
         this.isLoginFailed = true
       },
