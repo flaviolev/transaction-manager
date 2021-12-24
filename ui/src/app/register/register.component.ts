@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { Router } from '@angular/router'
 import { AuthService } from '../core/auth/auth.service'
 
 @Component({
@@ -7,32 +10,50 @@ import { AuthService } from '../core/auth/auth.service'
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  form: any = {
-    username: null,
-    email: null,
-    password: null,
-  }
+  registerForm!: FormGroup
   isSuccessful = false
   isSignUpFailed = false
   errorMessage = ''
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private _snackBar: MatSnackBar,
+  ) {
+    this.registerForm = new FormGroup({
+      username: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+    })
+  }
 
   ngOnInit(): void {}
 
   onSubmit(): void {
-    const { username, email, password } = this.form
+    const username = this.registerForm.get('username')
+    const email = this.registerForm.get('email')
+    const password = this.registerForm.get('password')
 
-    this.authService.register(username, email, password).subscribe(
-      (data) => {
-        console.log(data)
-        this.isSuccessful = true
-        this.isSignUpFailed = false
-      },
-      (err) => {
-        this.errorMessage = err.error.message
-        this.isSignUpFailed = true
-      },
-    )
+    this.authService
+      .register(username?.value, email?.value, password?.value)
+      .subscribe(
+        (data) => {
+          console.log(data)
+          this.isSuccessful = true
+          this._snackBar.open('user registered successfully', 'Close', {
+            duration: 1500,
+            panelClass: ['snackbar-success'],
+          })
+          this.isSignUpFailed = false
+          this.router.navigate(['/login'])
+        },
+        (err) => {
+          this.errorMessage = err.error.message
+          this.isSignUpFailed = true
+        },
+      )
   }
 }

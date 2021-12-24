@@ -3,6 +3,7 @@ import { TokenStorageService } from '../core/auth/token-storage.service'
 import { TransactionService } from '../core/transaction/transaction.service'
 import { UserService } from '../core/user/user.service'
 import { Transaction } from '../core/transaction/transaction'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ export class DashboardComponent implements OnInit {
     private userService: UserService,
     private tokenStorageService: TokenStorageService,
     private transactionService: TransactionService,
+    private _snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +32,12 @@ export class DashboardComponent implements OnInit {
   onSaveTransaction(newTransaction: any) {
     this.transactionService
       .createTransaction(newTransaction)
-      .subscribe((res) => window.location.reload())
+      .subscribe((res) => {
+        this._snackBar.open('transaction executed successfully', 'Close', {
+          duration: 1500,
+          panelClass: ['snackbar-success'],
+        })
+        window.location.reload()
+      })
   }
 }
