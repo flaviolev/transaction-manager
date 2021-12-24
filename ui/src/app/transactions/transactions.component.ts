@@ -3,6 +3,7 @@ import { Transaction } from '../core/transaction/transaction'
 import { TransactionService } from '../core/transaction/transaction.service'
 import { map } from 'rxjs'
 import { Router } from '@angular/router'
+import { NewTransactionSharingService } from '../core/transaction/newTransactionSharing.service'
 
 @Component({
   selector: 'app-transactions',
@@ -11,10 +12,11 @@ import { Router } from '@angular/router'
 })
 export class TransactionsComponent implements OnInit {
   transactions: Transaction[] = []
-
+  isNewTx: boolean = false
   constructor(
     private transactionService: TransactionService,
     private router: Router,
+    private newTransactionSharingService: NewTransactionSharingService,
   ) {}
 
   @Input() fetchSize: number = 0
@@ -26,6 +28,16 @@ export class TransactionsComponent implements OnInit {
   }
 
   getTransactions() {
+    this.newTransactionSharingService
+      .getIsNewTransaction()
+      .subscribe((isNewTx) => {
+        isNewTx ? this.getTransactionsFromTransactionService() : null
+        console.log('is new tx', isNewTx)
+      })
+    this.getTransactionsFromTransactionService()
+  }
+
+  private getTransactionsFromTransactionService() {
     this.transactionService.getTransactionsByUsername().subscribe((res) => {
       this.transactions = this.fetchSize
         ? sortByDate(res).slice(0, this.fetchSize)
