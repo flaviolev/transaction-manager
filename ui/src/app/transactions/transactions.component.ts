@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Transaction } from '../core/transaction/transaction'
 import { TransactionService } from '../core/transaction/transaction.service'
-import { map } from 'rxjs'
+import { map, Subscription } from 'rxjs'
 import { Router } from '@angular/router'
 import { NewTransactionSharingService } from '../core/transaction/newTransactionSharing.service'
 
@@ -10,9 +10,10 @@ import { NewTransactionSharingService } from '../core/transaction/newTransaction
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.css'],
 })
-export class TransactionsComponent implements OnInit {
+export class TransactionsComponent implements OnInit, OnDestroy {
   transactions: Transaction[] = []
   isNewTx: boolean = false
+  isNewTxSubscription = new Subscription()
   constructor(
     private transactionService: TransactionService,
     private router: Router,
@@ -28,11 +29,10 @@ export class TransactionsComponent implements OnInit {
   }
 
   getTransactions() {
-    this.newTransactionSharingService
+    this.isNewTxSubscription = this.newTransactionSharingService
       .getIsNewTransaction()
       .subscribe((isNewTx) => {
         isNewTx ? this.getTransactionsFromTransactionService() : null
-        console.log('is new tx', isNewTx)
       })
     this.getTransactionsFromTransactionService()
   }
@@ -54,5 +54,8 @@ export class TransactionsComponent implements OnInit {
 
   goToTransationsPage() {
     this.router.navigate(['/transactions'])
+  }
+  ngOnDestroy() {
+    this.isNewTxSubscription.unsubscribe()
   }
 }
