@@ -1,3 +1,12 @@
 .navbar-spacer {
   flex: 1 1 auto;
 }
+
+.active {
+  background-color: purple;
+}
+a:hover {
+  text-decoration: none;
+  color: white;
+  background-color: purple;
+}
