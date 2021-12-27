@@ -24,9 +24,8 @@ export class AppComponent implements OnInit {
     this.userStore.getIsLoggedIn().subscribe((userStatus) => {
       console.log('user is logged in ', userStatus)
       this.isLoggedIn = userStatus
-      this.isLoggedIn
-        ? this.route.navigate(['/dashboard'])
-        : this.route.navigate(['/login'])
+      if (this.isLoggedIn) this.route.navigate(['/dashboard'])
+
       if (this.isLoggedIn) {
         const user = this.tokenStorageService.getUser()
         this.roles = user.roles

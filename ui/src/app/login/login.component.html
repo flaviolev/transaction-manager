@@ -11,7 +11,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <mat-form-field class="field">
         <mat-label>Username:</mat-label>
-        <input matInput type="text" formControlName="username" />
+        <input id="username" matInput type="text" formControlName="username" />
         <mat-error *ngIf="loginForm.get('username')!.errors">
           Username required
         </mat-error>
@@ -19,7 +19,7 @@
       <br />
       <mat-form-field class="field">
         <mat-label>Password:</mat-label>
-        <input matInput type="password" formControlName="password" />
+        <input id="password" matInput type="password" formControlName="password" />
         <mat-error *ngIf="loginForm?.get('password')!.errors">
           Min length should be 6.
         </mat-error>
@@ -32,6 +32,7 @@
           color="primary"
           [disabled]="!loginForm.valid"
           class="field"
+          id="login"
         >
           Login
         </button>
