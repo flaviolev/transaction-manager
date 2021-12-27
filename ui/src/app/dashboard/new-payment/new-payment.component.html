@@ -1,52 +1,65 @@
 <mat-card>
-    <mat-card-title>New Payment</mat-card-title>
-    <mat-card-content>
-      <form
-        (ngSubmit)="onSave()"
-        autocomplete="off"
-        [formGroup]="newPaymentForm" 
-      >
-        <mat-form-field>        
-            <mat-label>From</mat-label>
-          <input
+  <mat-card-title>New Payment</mat-card-title>
+  <mat-card-content>
+    <form (ngSubmit)="onSave()" autocomplete="off" [formGroup]="newPaymentForm">
+      <mat-form-field>
+        <mat-label>From</mat-label>
+        <input
           formControlName="from"
-            matInput
-            placeholder="From"
-            type="text"
-            value="{{user! }} [{{balance  | currency:'CHF ':true}}]"
-          />
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>To</mat-label>
-          <input
+          matInput
+          placeholder="From"
+          type="text"
+          value="{{ user! }} [{{ balance | currency: 'CHF ':true }}]"
+        />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>To</mat-label>
+        <input
           formControlName="to"
-            matInput
-            placeholder="To"
-            type="text"
-            autocomplete="off"
-          />
-          <mat-error *ngIf="newPaymentForm.get('to')!.errors?.['userExist']">User does not exists!</mat-error>
-          <mat-error *ngIf="newPaymentForm.get('to')!.errors?.['required']">Required field</mat-error>
-          <mat-error *ngIf="newPaymentForm.get('to')!.errors?.['selfTransaction']==true">Cannot perform transaction on yourself!</mat-error>
-          
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>Amount (CHF)</mat-label>
-          <input
+          matInput
+          placeholder="To"
+          type="text"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="newPaymentForm.get('to')!.errors?.['userExist']">
+          User does not exists!
+        </mat-error>
+        <mat-error *ngIf="newPaymentForm.get('to')!.errors?.['required']">
+          Required field
+        </mat-error>
+        <mat-error
+          *ngIf="newPaymentForm.get('to')!.errors?.['selfTransaction']==true"
+        >
+          Cannot perform transaction on yourself!
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Amount (CHF)</mat-label>
+        <input
           formControlName="amount"
-            matInput
-            placeholder="Amount (CHF)"
-            autocomplete="off"
-            type="number"
-          />
-        </mat-form-field>
-        <br /><br />
-        <div>
-          <button mat-raised-button color="primary" [disabled]="!newPaymentForm.valid" type="submit">Pay</button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-  
+          matInput
+          placeholder="Amount (CHF)"
+          autocomplete="off"
+          type="number"
+        />
+        <mat-error *ngIf="newPaymentForm.get('amount')!.errors?.['min']">
+          Amount must be positive
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <br />
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!newPaymentForm.valid"
+          type="submit"
+        >
+          Pay
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

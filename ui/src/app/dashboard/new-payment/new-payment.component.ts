@@ -39,7 +39,7 @@ export class NewPaymentComponent implements OnInit {
         validators: [Validators.required, this.selfTransactionValidator()],
         asyncValidators: [this.userExistsValidator()],
       }),
-      amount: new FormControl(null, [Validators.required]),
+      amount: new FormControl(null, [Validators.required, Validators.min(1)]),
     })
   }
 
