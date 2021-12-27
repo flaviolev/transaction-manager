@@ -11,7 +11,6 @@ import { RegisterComponent } from './register/register.component'
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { authInterceptorProviders } from './core/auth/auth.interceptor'
-import { DashboardModule } from './dashboard/dashboard.module'
 import { SharedModule } from './shared/shared.module'
 
 @NgModule({
@@ -28,7 +27,6 @@ import { SharedModule } from './shared/shared.module'
     NoopAnimationsModule,
     FormsModule,
     HttpClientModule,
-    DashboardModule,
     SharedModule,
   ],
   providers: [authInterceptorProviders],

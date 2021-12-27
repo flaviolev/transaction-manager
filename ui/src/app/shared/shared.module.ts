@@ -4,16 +4,18 @@ import { BrowserModule } from '@angular/platform-browser'
 import { FilterTransactionsPipe } from './filter-transactions.pipe'
 import { MaterialModule } from './material.module'
 import { TransactionMatTableComponent } from './transaction-mat-table/transaction-mat-table.component'
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   declarations: [TransactionMatTableComponent, FilterTransactionsPipe],
-  imports: [MaterialModule, BrowserModule, ReactiveFormsModule, FormsModule],
+  imports: [MaterialModule, CommonModule, ReactiveFormsModule, FormsModule],
   exports: [
     MaterialModule,
     TransactionMatTableComponent,
     ReactiveFormsModule,
     FilterTransactionsPipe,
     FormsModule,
+    CommonModule,
   ],
 })
 export class SharedModule {}

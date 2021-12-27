@@ -6,7 +6,7 @@ import { NewPaymentComponent } from './new-payment/new-payment.component'
 import { SharedModule } from '../shared/shared.module'
 import { ReactiveFormsModule } from '@angular/forms'
 import { TransactionsComponent } from '../transactions/transactions.component'
-import { TransactionMatTableComponent } from '../shared/transaction-mat-table/transaction-mat-table.component'
+import { DashboardRoutingModule } from './dashboard-routing.module'
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { TransactionMatTableComponent } from '../shared/transaction-mat-table/tr
     LatestTransactionsComponent,
     TransactionsComponent,
   ],
-  imports: [SharedModule, BrowserModule, ReactiveFormsModule],
+  imports: [SharedModule, ReactiveFormsModule, DashboardRoutingModule],
   exports: [
     DashboardComponent,
     NewPaymentComponent,
