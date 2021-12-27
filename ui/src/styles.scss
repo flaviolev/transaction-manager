@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import 'variables';
 html,
 body {
   height: 100%;
@@ -15,8 +16,8 @@ body {
   margin-top: 5px;
 }
 .snackbar-success {
-  background-color: rgb(85, 175, 85);
+  background-color: $snackbar-success-color;
 }
 .snackbar-fail {
-  background-color: rgb(216, 67, 67);
+  background-color: $snackbar-error-color;
 }
