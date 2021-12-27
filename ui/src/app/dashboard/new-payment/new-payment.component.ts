@@ -67,5 +67,11 @@ export class NewPaymentComponent implements OnInit {
     }
 
     this.saveTransaction.emit(transaction)
+    this.resetToandAmountFields()
+  }
+
+  private resetToandAmountFields() {
+    this.newPaymentForm.get('to')?.reset()
+    this.newPaymentForm.get('amount')?.reset()
   }
 }
