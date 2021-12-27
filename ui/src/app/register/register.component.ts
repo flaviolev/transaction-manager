@@ -52,6 +52,10 @@ export class RegisterComponent implements OnInit {
         },
         (err) => {
           this.errorMessage = err.error.message
+          this._snackBar.open(err.error.message, 'Close', {
+            duration: 1500,
+            panelClass: ['snackbar-fail'],
+          })
           this.isSignUpFailed = true
         },
       )

@@ -6,7 +6,16 @@ Cypress.Commands.add('login', (username, password) => {
   cy.url().should('contain', '/dashboard')
 })
 
-describe('Login Test', () => { 
+Cypress.Commands.add('register', (username, email, password) => {
+  cy.visit('/register')
+  cy.get('#username').type(username)
+  cy.get('#email').type(email)
+  cy.get('#password').type(password)
+  cy.get('#register').click()
+  cy.url().should('contain', '/login')
+})
+
+describe('Login Test', () => {
   it('Visits the root path', () => {
     cy.visit('/')
     cy.contains('Finance Manager')
@@ -14,18 +23,27 @@ describe('Login Test', () => {
   })
 })
 
-describe('Login Test', () => { 
+describe('Login Test', () => {
+  before(() => {
+    cy.register('user10', 'user10@email.com', '123456')
+  })
   beforeEach(() => {
-    cy.login('user1', '123456')
+    cy.login('user10', '123456')
   })
 
   afterEach(() => {
-    cy.get("#logout").click()
+    cy.get('#logout').click()
     cy.url().should('contain', '/login')
   })
 
   it('Visits the transaction page', () => {
     cy.visit('/transaction')
     cy.contains('Transactions')
+  })
+
+  it('Visits the transaction page', () => {
+    cy.visit('/dashboard')
+    cy.get('#alltransactions').click()
+    cy.url().should('contain', '/transactions')
   })
 })
