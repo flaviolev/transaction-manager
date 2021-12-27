@@ -17,6 +17,21 @@ Cypress.Commands.add('register', (username, email, password) => {
     ? cy.url().should('contain', '/register')
     : cy.url().should('contain', '/login')
 })
+Cypress.Commands.add('createPayment', (to, amount) => {
+  cy.visit('/dashboard')
+  cy.get('#to').type(to)
+  cy.get('#amount').type(amount)
+
+  cy.request(`http://localhost:8080/api/user/${to}`).then((res) => {
+    if (!!res.body) {
+      cy.get('#pay').should('not.be.disabled')
+      cy.get('#pay').click()
+      cy.get('table').contains('td:nth-child(2)', to).should('be.visible')
+    } else {
+      cy.get('#pay').should('be.disabled')
+    }
+  })
+})
 
 describe('Login Test', () => {
   it('Visits the root path', () => {
@@ -44,9 +59,12 @@ describe('Login Test', () => {
     cy.contains('Transactions')
   })
 
-  it('Visits the transaction page', () => {
+  it('Click all transaction and visits the transaction page', () => {
     cy.visit('/dashboard')
     cy.get('#alltransactions').click()
     cy.url().should('contain', '/transactions')
+  })
+  it('Tries to create a new transaction', () => {
+    cy.createPayment('user2', 10)
   })
 })

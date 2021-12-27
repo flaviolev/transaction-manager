@@ -1,3 +1,4 @@
+import { Transaction } from '../../src/app/core/transaction/transaction'
 // ***********************************************
 // This example namespace declaration will help
 // with Intellisense and code completion in your
@@ -33,11 +34,8 @@
 declare namespace Cypress {
   interface Chainable {
     register(username: string, email: string, password: string): void
-  }
-}
-declare namespace Cypress {
-  interface Chainable {
     login(username: string, password: string): void
+    createNewPayment(to: string, amount: number): Transaction
   }
 }
 
