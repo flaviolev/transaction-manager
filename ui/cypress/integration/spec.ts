@@ -12,7 +12,10 @@ Cypress.Commands.add('register', (username, email, password) => {
   cy.get('#email').type(email)
   cy.get('#password').type(password)
   cy.get('#register').click()
-  cy.url().should('contain', '/login')
+  const userExist = cy.request(`http://localhost:8080/api/user/${username}`)
+  userExist
+    ? cy.url().should('contain', '/register')
+    : cy.url().should('contain', '/login')
 })
 
 describe('Login Test', () => {
