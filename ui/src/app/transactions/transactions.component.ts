@@ -8,7 +8,7 @@ import { NewTransactionSharingService } from '../core/transaction/newTransaction
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.css'],
+  styleUrls: ['./transactions.component.scss'],
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
   transactions: Transaction[] = []

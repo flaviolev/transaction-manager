@@ -1,0 +1,9 @@
+@mixin flex-dashboard($justify-content) {
+  display: flex;
+  justify-content: $justify-content;
+  margin-top: 40px;
+}
+
+.container {
+  @include flex-dashboard(space-between);
+}

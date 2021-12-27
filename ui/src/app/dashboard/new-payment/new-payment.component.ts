@@ -15,7 +15,7 @@ import { Transaction } from 'src/app/core/transaction/transaction'
 @Component({
   selector: 'app-new-payment',
   templateUrl: './new-payment.component.html',
-  styleUrls: ['./new-payment.component.css'],
+  styleUrls: ['./new-payment.component.scss'],
 })
 export class NewPaymentComponent implements OnInit {
   newPaymentForm!: FormGroup

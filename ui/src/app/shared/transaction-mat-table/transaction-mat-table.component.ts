@@ -5,7 +5,7 @@ import { Transaction } from '../../core/transaction/transaction'
 @Component({
   selector: 'app-transaction-mat-table',
   templateUrl: './transaction-mat-table.component.html',
-  styleUrls: ['./transaction-mat-table.component.css'],
+  styleUrls: ['./transaction-mat-table.component.scss'],
 })
 export class TransactionMatTableComponent implements OnInit {
   searchText: string = ''

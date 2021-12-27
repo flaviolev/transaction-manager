@@ -1,0 +1,14 @@
+@import '../variables';
+
+.navbar-spacer {
+  flex: 1 1 auto;
+}
+
+.active {
+  background-color: $navbar-active-link-color;
+}
+a:hover {
+  text-decoration: none;
+  color: $navbar-text-link-color;
+  background-color: $navbar-active-link-color;
+}
