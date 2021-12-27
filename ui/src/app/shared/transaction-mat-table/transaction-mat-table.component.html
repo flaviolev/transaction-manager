@@ -46,7 +46,12 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   <span *ngIf="showButton">
-    <button mat-raised-button color="primary" (click)="goToTransationsPage()">
+    <button
+      id="alltransactions"
+      mat-raised-button
+      color="primary"
+      (click)="goToTransationsPage()"
+    >
       All transactions
     </button>
   </span>

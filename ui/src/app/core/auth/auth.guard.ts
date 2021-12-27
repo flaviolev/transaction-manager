@@ -10,12 +10,13 @@ import {
 } from '@angular/router'
 import { Observable } from 'rxjs'
 import { UserStoreService } from '../user/userStore.service'
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanLoad {
-  constructor(private userStore: UserStoreService) {}
+  constructor(private userStore: UserStoreService, private route: Router) {}
   isLoggedInVar: boolean = false
 
   canActivate(
@@ -41,9 +42,12 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
 
   private isLoggedIn(): boolean {
-    this.userStore
-      .getIsLoggedIn()
-      .subscribe((userStatus) => (this.isLoggedInVar = userStatus))
+    this.userStore.getIsLoggedIn().subscribe((userStatus) => {
+      if (userStatus === false) {
+        this.route.navigate(['/login'])
+      }
+      this.isLoggedInVar = userStatus
+    })
     return this.isLoggedInVar
   }
 }
