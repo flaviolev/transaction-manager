@@ -9,6 +9,7 @@ Cypress.Commands.add('login', (username, password) => {
   cy.get('[data-cy=nav-link-dashboard]').should('be.visible')
   cy.get('[data-cy=nav-link-dashboard]').should('have.class', 'active')
   cy.get('[data-cy=logout]').should('be.visible')
+  cy.get('[data-cy=nav-link-profile]').should('contain', username)
 })
 
 Cypress.Commands.add('register', (username, email, password) => {

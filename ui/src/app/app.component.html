@@ -43,7 +43,12 @@
           </a>
         </div>
         <div *ngIf="isLoggedIn">
-          <a mat-button [routerLink]="'/profile'" routerLinkActive="active">
+          <a
+            data-cy="nav-link-profile"
+            mat-button
+            [routerLink]="'/profile'"
+            routerLinkActive="active"
+          >
             {{ username }}
           </a>
           <a data-cy="logout" mat-button (click)="logout()">Logout</a>
