@@ -1,17 +1,17 @@
 Cypress.Commands.add('login', (username, password) => {
   cy.visit('/login')
-  cy.get('#username').type(username)
-  cy.get('#password').type(password)
-  cy.get('#login').click()
+  cy.get('[data-cy=username]').type(username)
+  cy.get('[data-cy=password]').type(password)
+  cy.get('[data-cy=login]').click()
   cy.url().should('contain', '/dashboard')
 })
 
 Cypress.Commands.add('register', (username, email, password) => {
   cy.visit('/register')
-  cy.get('#username').type(username)
-  cy.get('#email').type(email)
-  cy.get('#password').type(password)
-  cy.get('#register').click()
+  cy.get('[data-cy=username]').type(username)
+  cy.get('[data-cy=email]').type(email)
+  cy.get('[data-cy=password]').type(password)
+  cy.get('[data-cy=register]').click()
   const userExist = cy.request(`http://localhost:8080/api/user/${username}`)
   userExist
     ? cy.url().should('contain', '/register')
@@ -19,16 +19,16 @@ Cypress.Commands.add('register', (username, email, password) => {
 })
 Cypress.Commands.add('createPayment', (to, amount) => {
   cy.visit('/dashboard')
-  cy.get('#to').type(to)
-  cy.get('#amount').type(amount)
+  cy.get('[data-cy=to]').type(to)
+  cy.get('[data-cy=amount]').type(amount)
 
   cy.request(`http://localhost:8080/api/user/${to}`).then((res) => {
     if (!!res.body) {
-      cy.get('#pay').should('not.be.disabled')
-      cy.get('#pay').click()
+      cy.get('[data-cy=pay]').should('not.be.disabled')
+      cy.get('[data-cy=pay]').click()
       cy.get('table').contains('td:nth-child(2)', to).should('be.visible')
     } else {
-      cy.get('#pay').should('be.disabled')
+      cy.get('[data-cy=pay]').should('be.disabled')
     }
   })
 })
@@ -50,7 +50,7 @@ describe('Login Test', () => {
   })
 
   afterEach(() => {
-    cy.get('#logout').click()
+    cy.get('[data-cy=logout]').click()
     cy.url().should('contain', '/login')
   })
 
@@ -61,7 +61,7 @@ describe('Login Test', () => {
 
   it('Click all transaction and visits the transaction page', () => {
     cy.visit('/dashboard')
-    cy.get('#alltransactions').click()
+    cy.get('[data-cy=alltransactions]').click()
     cy.url().should('contain', '/transactions')
   })
   it('Tries to create a new transaction', () => {
