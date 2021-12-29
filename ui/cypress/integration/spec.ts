@@ -1,13 +1,20 @@
 Cypress.Commands.add('login', (username, password) => {
   cy.visit('/login')
+  cy.get('[data-cy=nav-link-login]').should('have.class', 'active')
   cy.get('[data-cy=username]').type(username)
   cy.get('[data-cy=password]').type(password)
   cy.get('[data-cy=login]').click()
   cy.url().should('contain', '/dashboard')
+  cy.get('[data-cy=nav-link-transactions]').should('be.visible')
+  cy.get('[data-cy=nav-link-dashboard]').should('be.visible')
+  cy.get('[data-cy=nav-link-dashboard]').should('have.class', 'active')
+  cy.get('[data-cy=logout]').should('be.visible')
+  cy.get('[data-cy=nav-link-profile]').should('contain', username)
 })
 
 Cypress.Commands.add('register', (username, email, password) => {
   cy.visit('/register')
+  cy.get('[data-cy=nav-link-register]').should('have.class', 'active')
   cy.get('[data-cy=username]').type(username)
   cy.get('[data-cy=email]').type(email)
   cy.get('[data-cy=password]').type(password)
@@ -33,15 +40,17 @@ Cypress.Commands.add('createPayment', (to, amount) => {
   })
 })
 
-describe('Login Test', () => {
+describe('Root path redirect to login test', () => {
   it('Visits the root path', () => {
     cy.visit('/')
+    cy.get('[data-cy=nav-link-register]').should('be.visible')
+    cy.get('[data-cy=nav-link-login]').should('have.class', 'active')
     cy.contains('Finance Manager')
     cy.url().should('contain', '/login')
   })
 })
 
-describe('Login Test', () => {
+describe('Register/Login/App flows Test', () => {
   before(() => {
     cy.register('user10', 'user10@email.com', '123456')
   })

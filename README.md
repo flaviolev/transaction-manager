@@ -26,7 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 ## Bundle analyzer
 
-Run `npm run analyze` to execute webpack bundle analyzer
+Run  `npm run build:stats` to generate stats under dist filder and then `npm run analyze` to execute webpack bundle analyzer
 
 # Db
 

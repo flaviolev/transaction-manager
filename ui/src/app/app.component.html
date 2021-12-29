@@ -3,27 +3,52 @@
     <mat-toolbar-row>
       <h1>{{ title }}</h1>
       <span class="menu-spacer"></span>
-      <div>
+      <div *ngIf="isLoggedIn">
         <a mat-button [routerLink]="'/home'" routerLinkActive="active">Home</a>
-        <a mat-button [routerLink]="'/dashboard'" routerLinkActive="active">
+        <a
+          data-cy="nav-link-dashboard"
+          mat-button
+          [routerLink]="'/dashboard'"
+          routerLinkActive="active"
+        >
           Dashboard
         </a>
-        <a mat-button [routerLink]="'/transactions'" routerLinkActive="active">
+        <a
+          data-cy="nav-link-transactions"
+          mat-button
+          [routerLink]="'/transactions'"
+          routerLinkActive="active"
+        >
           Transactions
         </a>
       </div>
       <span class="navbar-spacer"></span>
       <div>
         <div *ngIf="!isLoggedIn">
-          <a mat-button [routerLink]="'/register'" routerLinkActive="active">
+          <a
+            data-cy="nav-link-register"
+            mat-button
+            [routerLink]="'/register'"
+            routerLinkActive="active"
+          >
             Register
           </a>
-          <a mat-button [routerLink]="'/login'" routerLinkActive="active">
+          <a
+            data-cy="nav-link-login"
+            mat-button
+            [routerLink]="'/login'"
+            routerLinkActive="active"
+          >
             Login
           </a>
         </div>
         <div *ngIf="isLoggedIn">
-          <a mat-button [routerLink]="'/profile'" routerLinkActive="active">
+          <a
+            data-cy="nav-link-profile"
+            mat-button
+            [routerLink]="'/profile'"
+            routerLinkActive="active"
+          >
             {{ username }}
           </a>
           <a data-cy="logout" mat-button (click)="logout()">Logout</a>
