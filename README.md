@@ -1,6 +1,6 @@
 # Finance manager
 ## Tech stack:
-### Spring Boot , Angular 13, mySQL, Liquibase,Cypress, Maven
+### Spring Boot , Angular 13, mySQL, Liquibase,Cypress, Gradle
 
 
 
@@ -38,8 +38,8 @@ Run  `npm run build:stats` to generate stats under dist filder and then `npm run
 
 # Api
 
-### Run using maven
-. `mvn spring-boot:run`
+### Run using gradle
+. `./gradlew bootRun`
 
 ### Generate liquibase changelog
 
