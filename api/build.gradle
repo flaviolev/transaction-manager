@@ -18,27 +18,26 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.1'
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas:2.6.1'
-    implementation 'org.springframework.boot:spring-boot-starter-security:2.6.1'
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation 'mysql:mysql-connector-java:8.0.27'
     implementation 'org.liquibase:liquibase-core:4.5.0'
-    implementation 'org.liquibase:liquibase-maven-plugin:3.4.1'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.1'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.2'
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.6.1'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.1'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test:5.6.0'
 }
 
 group = 'com.zuehlke'
 version = '0.0.1-SNAPSHOT'
 description = 'finance-manager'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications {
@@ -50,4 +49,23 @@ publishing {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+Properties applicationProps = new Properties()
+applicationProps.load(new FileInputStream("src/main/resources/application.properties"))
+
+task generateChangeLog(type: JavaExec) {
+    group = "liquibase"
+
+
+    classpath sourceSets.main.runtimeClasspath
+    main = "liquibase.integration.commandline.Main"
+
+    args "--changeLogFile=" +"src/main/resources/db/changelog/gradle-initial-liquibase-outputChangeLog.xml"
+    args "--referenceUrl=hibernate:spring:com.zuehlke.financemanager.models"+"?dialect=" + applicationProps.getProperty('spring.jpa.properties.hibernate.dialect')
+    args "--username=" + applicationProps.getProperty('spring.datasource.username')
+    args "--password=" + applicationProps.getProperty('spring.datasource.password')
+    args "--url=" + applicationProps.getProperty('spring.datasource.url')
+    args "--driver=com.mysql.cj.jdbc.Driver"
+    args "generateChangeLog"
 }

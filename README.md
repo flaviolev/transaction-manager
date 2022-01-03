@@ -43,7 +43,7 @@ Run  `npm run build:stats` to generate stats under dist filder and then `npm run
 
 ### Generate liquibase changelog
 
-- `mvn liquibase:generateChangeLog`
+- `./gradlew generateChangeLog`
 
 ### Swagger url
 - http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
