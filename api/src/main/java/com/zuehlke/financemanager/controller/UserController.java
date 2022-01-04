@@ -20,14 +20,10 @@ public class UserController {
     @GetMapping("{username}")
     public Boolean existsByUsername(@PathVariable String username) {
         return userRepository.existsByUsername((username));
-
     }
 
     @GetMapping("/balance")
     public Long findBalanceByUsername() {
         return userDetailsService.findBalanceByUsername();
-
     }
-
-
 }

@@ -32,6 +32,9 @@ dependencies {
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test:5.6.0'
+    testImplementation "org.testcontainers:testcontainers:1.16.2"
+    implementation platform('org.testcontainers:testcontainers-bom:1.16.2')
+    testImplementation('org.testcontainers:mysql')
 }
 
 group = 'com.zuehlke'
@@ -68,4 +71,8 @@ task generateChangeLog(type: JavaExec) {
     args "--url=" + applicationProps.getProperty('spring.datasource.url')
     args "--driver=com.mysql.cj.jdbc.Driver"
     args "generateChangeLog"
+}
+
+test {
+    useJUnitPlatform()
 }

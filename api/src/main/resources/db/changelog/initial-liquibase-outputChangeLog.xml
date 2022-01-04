@@ -83,4 +83,10 @@
             <column name="name" value="ROLE_USER"/>
         </insert>
     </changeSet>
+    <changeSet author="call" id="1640602349020-14">
+        <insert tableName="roles">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
