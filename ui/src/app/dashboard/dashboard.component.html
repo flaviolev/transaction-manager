@@ -1,4 +1,12 @@
 <div class="container">
-    <app-new-payment [balance]="currentBalance" [user]="currentUser" (saveTransaction)="onSaveTransaction($event)" ></app-new-payment>
-    <app-latest-transactions  ></app-latest-transactions>
+  <app-new-payment
+    [balance]="currentBalance"
+    [user]="currentUser"
+    (saveTransaction)="onSaveTransaction($event)"
+  ></app-new-payment>
+  <app-transaction-mat-table
+    [showButton]="true"
+    [transactions]="transactions"
+    [showFilter]="false"
+  ></app-transaction-mat-table>
 </div>
