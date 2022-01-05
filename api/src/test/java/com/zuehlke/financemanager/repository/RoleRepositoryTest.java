@@ -22,7 +22,7 @@ public class RoleRepositoryTest extends BaseTest {
 
     @Test
     public void findByName() {
-        Optional<Role> userRole = roleRepository.findByName(ERole.ROLE_ADMIN);
+        Optional<Role> userRole = roleRepository.findByName(ERole.ROLE_USER);
         assertThat(userRole).isNotEmpty();
     }
 }

@@ -1,23 +1,16 @@
 package com.zuehlke.financemanager.repository;
 
 import com.zuehlke.financemanager.BaseTest;
-import com.zuehlke.financemanager.models.ERole;
-import com.zuehlke.financemanager.models.Role;
 import com.zuehlke.financemanager.models.User;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -29,23 +22,30 @@ public class UserRepositoryTest extends BaseTest {
     private RoleRepository roleRepository;
 //    @Autowired
 //    protected PasswordEncoder passwordEncoder;
+User actualUser;
 
     @BeforeEach
     public void setUp(){
-        User actualUser = createTestUser("test user", "user@email.com", "test password");
+        actualUser = createTestUser("test user", "user@email.com", "test password");
         assertThat(actualUser).hasFieldOrProperty("email");
     }
 
     @Test
     public void findByUsername() {
+        Optional<User> foundByUsername=userRepository.findByUsername("test user");
+        assertThat(foundByUsername.get()).isEqualTo(actualUser);
     }
 
     @Test
     public void existsByUsername() {
+        Boolean userExistsByUsername=userRepository.existsByUsername("test user");
+        assertThat(userExistsByUsername).isTrue();
     }
 
     @Test
     public void existsByEmail() {
+        Boolean userExistsByEmail=userRepository.existsByEmail("user@email.com");
+        assertThat(userExistsByEmail).isTrue();
     }
 
     protected User createTestUser(String username, String email,  String password) {
