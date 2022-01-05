@@ -49,4 +49,8 @@ Run  `npm run build:stats` to generate stats under dist filder and then `npm run
 - http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
 
 
+### Generate open api documentation with gradle
+- Launch `./gradlew clean generateOpenApiDocs ` and go under `build/openapi.json`
+
+
 
