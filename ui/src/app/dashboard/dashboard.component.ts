@@ -4,7 +4,6 @@ import { TransactionService } from '../core/transaction/transaction.service'
 import { UserService } from '../core/user/user.service'
 import { Transaction } from '../core/transaction/transaction'
 import { MatSnackBar } from '@angular/material/snack-bar'
-import { NewTransactionSharingService } from '../core/transaction/newTransactionSharing.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -15,22 +14,27 @@ export class DashboardComponent implements OnInit {
   currentBalance = 0
   currentUser: any
   transaction: Transaction | undefined
+  transactions: Transaction[] = []
   constructor(
     private userService: UserService,
     private tokenStorageService: TokenStorageService,
     private transactionService: TransactionService,
     private _snackBar: MatSnackBar,
-    private newTransactionSharingService: NewTransactionSharingService,
   ) {}
 
   ngOnInit(): void {
     this.userService.getBalance().subscribe((bal) => {
       this.currentBalance = bal
     })
+    this.loadTransactions()
     const user = this.tokenStorageService.getUser()
     this.currentUser = user.username
   }
-
+  private loadTransactions() {
+    this.transactionService
+      .getTransactionsByUsername(3)
+      .subscribe((res) => (this.transactions = res))
+  }
   onSaveTransaction(newTransaction: any) {
     this.transactionService
       .createTransaction(newTransaction)
@@ -39,8 +43,7 @@ export class DashboardComponent implements OnInit {
           duration: 1500,
           panelClass: ['snackbar-success'],
         })
-        this.newTransactionSharingService.setIsNewTransaction(true)
-        //window.location.reload()
+        this.loadTransactions()
       })
   }
 }
