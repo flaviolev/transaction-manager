@@ -2,7 +2,7 @@ package com.zuehlke.financemanager.security;
 
 import com.zuehlke.financemanager.security.jwt.AuthEntryPointJwt;
 import com.zuehlke.financemanager.security.jwt.AuthTokenFilter;
-import com.zuehlke.financemanager.security.services.UserDetailsServiceImpl;
+import com.zuehlke.financemanager.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

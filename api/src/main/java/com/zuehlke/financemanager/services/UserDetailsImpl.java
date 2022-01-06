@@ -1,4 +1,4 @@
-package com.zuehlke.financemanager.security.services;
+package com.zuehlke.financemanager.services;
 
 
 import java.util.Collection;

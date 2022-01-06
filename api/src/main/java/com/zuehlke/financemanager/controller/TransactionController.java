@@ -20,10 +20,8 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/api/transaction")
 public class TransactionController {
 
-
     @Autowired
     TransactionService transactionService;
-
 
     @GetMapping()
     public ResponseEntity<List<Transaction>> getAllTransactions() {
@@ -42,19 +40,12 @@ public class TransactionController {
             return ResponseEntity
                     .status(HttpStatus.NOT_ACCEPTABLE)
                     .body(amountExceedBalanceException.getMessage());
-
-
         }
         catch (SameUserTransactionNotAllowedException sameUserTransactionNotAllowedException) {
 
             return ResponseEntity
                     .status(HttpStatus.NOT_ACCEPTABLE)
                     .body(sameUserTransactionNotAllowedException.getMessage());
-
-
         }
-
-
     }
-
 }
