@@ -1,4 +1,4 @@
-package com.zuehlke.financemanager.service;
+package com.zuehlke.financemanager.services;
 
 import com.zuehlke.financemanager.exception.AmountExceedBalanceException;
 import com.zuehlke.financemanager.exception.SameUserTransactionNotAllowedException;

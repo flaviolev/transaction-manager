@@ -4,7 +4,7 @@ import com.zuehlke.financemanager.exception.AmountExceedBalanceException;
 import com.zuehlke.financemanager.exception.SameUserTransactionNotAllowedException;
 import com.zuehlke.financemanager.models.Transaction;
 import com.zuehlke.financemanager.payload.response.MessageResponse;
-import com.zuehlke.financemanager.service.TransactionService;
+import com.zuehlke.financemanager.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

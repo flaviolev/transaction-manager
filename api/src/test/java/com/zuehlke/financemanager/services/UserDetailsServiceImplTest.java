@@ -22,12 +22,20 @@ public class UserDetailsServiceImplTest {
     protected UserDetailsServiceImpl userService;
 
     @Test
-    @WithMockUser(username = "user1", roles = {"USER", "ADMIN"})
+    @WithMockUser(username = "user1")
     public void findBalanceByUsername() {
         Mockito.when(userRepository.findByUsername("user1")).thenReturn(
                 Optional.ofNullable(createTestUser("user1", "user1@zuehlke.com", "user1")));
         Long balance = userService.findBalanceByUsername();
         assertThat(balance).isEqualTo(1000L);
+    }
+
+    @Test
+    @WithMockUser(username = "user2")
+    public void findBalanceByWrongUsername() {
+        Mockito.when(userRepository.findByUsername("user2")).thenReturn(Optional.ofNullable(null));
+        Long balance = userService.findBalanceByUsername();
+        assertThat(balance).isNull();
     }
 
     @Test
