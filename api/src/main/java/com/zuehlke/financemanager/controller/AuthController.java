@@ -17,7 +17,7 @@ import com.zuehlke.financemanager.payload.response.MessageResponse;
 import com.zuehlke.financemanager.repository.RoleRepository;
 import com.zuehlke.financemanager.repository.UserRepository;
 import com.zuehlke.financemanager.security.jwt.JwtUtils;
-import com.zuehlke.financemanager.security.services.UserDetailsImpl;
+import com.zuehlke.financemanager.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

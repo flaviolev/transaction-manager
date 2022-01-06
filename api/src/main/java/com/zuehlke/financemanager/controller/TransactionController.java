@@ -4,7 +4,7 @@ import com.zuehlke.financemanager.exception.AmountExceedBalanceException;
 import com.zuehlke.financemanager.exception.SameUserTransactionNotAllowedException;
 import com.zuehlke.financemanager.models.Transaction;
 import com.zuehlke.financemanager.payload.response.MessageResponse;
-import com.zuehlke.financemanager.service.TransactionService;
+import com.zuehlke.financemanager.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,8 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/api/transaction")
 public class TransactionController {
 
-
     @Autowired
     TransactionService transactionService;
-
 
     @GetMapping()
     public ResponseEntity<List<Transaction>> getAllTransactions() {
@@ -42,19 +40,12 @@ public class TransactionController {
             return ResponseEntity
                     .status(HttpStatus.NOT_ACCEPTABLE)
                     .body(amountExceedBalanceException.getMessage());
-
-
         }
         catch (SameUserTransactionNotAllowedException sameUserTransactionNotAllowedException) {
 
             return ResponseEntity
                     .status(HttpStatus.NOT_ACCEPTABLE)
                     .body(sameUserTransactionNotAllowedException.getMessage());
-
-
         }
-
-
     }
-
 }
