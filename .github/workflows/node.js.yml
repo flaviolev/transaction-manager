@@ -39,4 +39,4 @@ jobs:
       with:
         build: npm run build
         start: npm start
-        cache-dependency-path: ui/package-lock.json
+        working-directory: ./ui
