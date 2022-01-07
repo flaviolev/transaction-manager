@@ -37,5 +37,6 @@ jobs:
     - name: Cypress run
       uses: cypress-io/github-action@v2
       with:
-        build: cd ui & npm run build
-        start: cd ui & npm start
+        build: npm run build
+        start: npm start
+        cache-dependency-path: ui/package-lock.json
