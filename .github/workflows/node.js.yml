@@ -32,5 +32,9 @@ jobs:
         cache: 'npm'
         cache-dependency-path: ui/package-lock.json
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm run ng e2e
+    #- run: npm run build --if-present
+    - name: Cypress run
+      uses: cypress-io/github-action@v2
+      with:
+        build: npm run build
+        start: npm start
