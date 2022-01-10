@@ -36,6 +36,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error) => {
+        console.log('err', error)
+
         if (
           error instanceof HttpErrorResponse &&
           !authReq.url.includes('auth/signin') &&
@@ -54,17 +56,19 @@ export class AuthInterceptor implements HttpInterceptor {
       this.isRefreshing = true
       this.refreshTokenSubject.next(null)
 
-      const token = this.tokenService.getRefreshToken()
+      const refreshToken = this.tokenService.getRefreshToken()
 
-      if (token)
-        return this.authService.refreshToken(token).pipe(
+      if (refreshToken)
+        return this.authService.refreshToken(refreshToken).pipe(
           switchMap((token: any) => {
             this.isRefreshing = false
 
             this.tokenService.saveToken(token.accessToken)
             this.refreshTokenSubject.next(token.accessToken)
 
-            return next.handle(this.addTokenHeader(request, token.accessToken))
+            return next.handle(
+              this.addAccessTokenHeader(request, token.accessToken),
+            )
           }),
           catchError((err) => {
             this.isRefreshing = false
@@ -78,11 +82,18 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.refreshTokenSubject.pipe(
       filter((token) => token !== null),
       take(1),
-      switchMap((token) => next.handle(this.addTokenHeader(request, token))),
+      switchMap((token) =>
+        next.handle(this.addAccessTokenHeader(request, token.accessToken)),
+      ),
     )
   }
-
+  private addAccessTokenHeader(request: HttpRequest<any>, token: string) {
+    return request.clone({
+      headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token),
+    })
+  }
   private addTokenHeader(request: HttpRequest<any>, token: string) {
+    console.log('format normal', JSON.parse(token).token)
     return request.clone({
       headers: request.headers.set(
         TOKEN_HEADER_KEY,

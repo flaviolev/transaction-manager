@@ -11,7 +11,7 @@ import { RegisterComponent } from './register/register.component'
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { authInterceptorProviders } from './core/auth/auth.interceptor'
-import { httpErrorInterceptorProviders } from './core/error/http-error.interceptor'
+//import { httpErrorInterceptorProviders } from './core/error/http-error.interceptor'
 import { SharedModule } from './shared/shared.module'
 
 @NgModule({
@@ -30,7 +30,7 @@ import { SharedModule } from './shared/shared.module'
     HttpClientModule,
     SharedModule,
   ],
-  providers: [authInterceptorProviders, httpErrorInterceptorProviders],
+  providers: [authInterceptorProviders], //httpErrorInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
