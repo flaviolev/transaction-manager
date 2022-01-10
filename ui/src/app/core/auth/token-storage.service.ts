@@ -17,9 +17,9 @@ export class TokenStorageService {
     window.sessionStorage.setItem(TOKEN_KEY, JSON.stringify(token))
   }
 
-  public saveRefreshToken(token: string): void {
+  public saveRefreshToken(refreshToken: string): void {
     window.sessionStorage.removeItem(REFRESHTOKEN_KEY)
-    window.sessionStorage.setItem(REFRESHTOKEN_KEY, token)
+    window.sessionStorage.setItem(REFRESHTOKEN_KEY, refreshToken)
   }
   public getRefreshToken(): string | null {
     return window.sessionStorage.getItem(REFRESHTOKEN_KEY)
