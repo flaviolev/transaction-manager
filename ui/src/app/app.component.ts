@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { Subscription } from 'rxjs'
 import { TokenStorageService } from './core/auth/token-storage.service'
 import { UserStoreService } from './core/user/userStore.service'
 
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit {
   isLoggedIn = false
   username?: string
   private roles: string[] = []
+  eventBusSub?: Subscription
 
   constructor(
     private tokenStorageService: TokenStorageService,

@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(username?.value, password?.value).subscribe(
       (data) => {
         this.tokenStorage.saveToken(data)
+        this.tokenStorage.saveRefreshToken(data.refreshToken)
 
         this.isLoginFailed = false
         this.userStore.setIsLoggedIn(true)
