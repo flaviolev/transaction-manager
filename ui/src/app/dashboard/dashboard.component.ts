@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   currentUser: any
   transaction: Transaction | undefined
   transactions: Transaction[] = []
+  content?: string
   constructor(
     private userService: UserService,
     private tokenStorageService: TokenStorageService,
@@ -23,9 +24,14 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getBalance().subscribe((bal) => {
-      this.currentBalance = bal
-    })
+    this.userService.getBalance().subscribe(
+      (bal) => {
+        this.currentBalance = bal
+      },
+      (err) => {
+        this.content = err.error.message || err.error || err.message
+      },
+    )
     this.loadTransactions()
     const user = this.tokenStorageService.getUser()
     this.currentUser = user.username
