@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core'
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -17,20 +25,14 @@ import { Transaction } from 'src/app/core/transaction/transaction'
   templateUrl: './new-payment.component.html',
   styleUrls: ['./new-payment.component.scss'],
 })
-export class NewPaymentComponent implements OnInit {
+export class NewPaymentComponent implements OnInit, OnChanges {
   newPaymentForm!: FormGroup
 
-  constructor(private userService: UserService) {}
-
-  @Input() balance = 0
-  @Input() user: any
-  @Output() saveTransaction = new EventEmitter<Transaction>()
-
-  ngOnInit(): void {
+  constructor(private userService: UserService) {
     this.newPaymentForm = new FormGroup({
       from: new FormControl(
         {
-          value: '',
+          value: this.user + '[CHF] ' + this.balance,
           disabled: true,
         },
         [Validators.required],
@@ -42,6 +44,18 @@ export class NewPaymentComponent implements OnInit {
       amount: new FormControl(null, [Validators.required, Validators.min(1)]),
     })
   }
+
+  @Input() balance = 0
+  @Input() user: any
+  @Output() saveTransaction = new EventEmitter<Transaction>()
+  ngOnChanges(changes: any): void {
+    if (changes.balance.currentValue) {
+      this.newPaymentForm.patchValue({
+        from: this.user + '[CHF] ' + this.balance,
+      })
+    }
+  }
+  ngOnInit(): void {}
 
   userExistsValidator(): AsyncValidatorFn {
     return (to: AbstractControl): Observable<ValidationErrors | null> => {
