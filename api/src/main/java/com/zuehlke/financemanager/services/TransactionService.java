@@ -39,7 +39,7 @@ public class TransactionService {
             return transactionRepository.findByUserId(currentId);
         }
 
-        return null;
+        return Optional.empty();
     }
 
     @Transactional

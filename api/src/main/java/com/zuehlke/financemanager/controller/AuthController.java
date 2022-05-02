@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    public static final long INITIAL_BALANCE = 1000L;
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -130,7 +131,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
-        user.setBalance(1000L);
+        user.setBalance(INITIAL_BALANCE);
         userRepository.save(user);
     }
 }

@@ -32,11 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         Optional<User> currentUser = userRepository.findByUsername(currentPrincipalName);
-        if (currentUser.isPresent()) {
-            return currentUser.get().getBalance();
-        }
+        return currentUser.map(User::getBalance).orElse(null);
 
-        return null;
     }
 
     public Boolean existsByUsername(@PathVariable String username) {

@@ -35,17 +35,11 @@ public class TransactionController {
         try {
             transactionService.addTransaction(transaction);
             return ok(new MessageResponse("Transaction created successfully!"));
-        } catch (AmountExceedBalanceException amountExceedBalanceException) {
+        } catch (AmountExceedBalanceException | SameUserTransactionNotAllowedException exception) {
 
             return ResponseEntity
                     .status(HttpStatus.NOT_ACCEPTABLE)
-                    .body(amountExceedBalanceException.getMessage());
-        }
-        catch (SameUserTransactionNotAllowedException sameUserTransactionNotAllowedException) {
-
-            return ResponseEntity
-                    .status(HttpStatus.NOT_ACCEPTABLE)
-                    .body(sameUserTransactionNotAllowedException.getMessage());
+                    .body(exception.getMessage());
         }
     }
 }
