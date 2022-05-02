@@ -20,6 +20,8 @@ import java.util.Optional;
 @Service
 public class TransactionService {
 
+    public static final long MINIMUM_VALID_BALANCE = 0L;
+
     @Autowired
     UserRepository userRepository;
 
@@ -45,37 +47,56 @@ public class TransactionService {
         Optional<User> source = userRepository.findByUsername(transaction.getSource());
         Optional<User> target = userRepository.findByUsername(transaction.getTarget());
 
-        if (source.equals(target)) {
-            throw new SameUserTransactionNotAllowedException("Cannot perform transaction on yourself!");
-        } else {
-            Long newAmount = transaction.getAmount();
-            if ((source.get().getBalance() >= 0) && (source.get().getBalance() >= newAmount)) {
-                long sourceBalance = source.get().getBalance() - newAmount;
-                Transaction sourceTransaction = new Transaction(transaction.getId(), transaction.getSource(), transaction.getTarget(), -transaction.getAmount(), new Date(), source.get(), sourceBalance);
-                long targetBalance = target.get().getBalance() + newAmount;
-                Transaction targetTransaction = new Transaction(transaction.getId(), transaction.getSource(), transaction.getTarget(), transaction.getAmount(), new Date(), target.get(), targetBalance);
-
-                transactionRepository.save(sourceTransaction);
-                transactionRepository.save(targetTransaction);
-
-
-                source.get().setBalance(sourceBalance);
-                target.get().setBalance(targetBalance);
-
-                userRepository.save(source.get());
-                userRepository.save(target.get());
-
-
-            } else {
-                throw new AmountExceedBalanceException("Amount exceed your balance!");
-            }
-        }
+        saveTransaction(transaction, source, target);
 
 
     }
 
+    private void saveTransaction(Transaction transaction, Optional<User> source, Optional<User> target) {
+        if (source.equals(target)) {
+            throw new SameUserTransactionNotAllowedException("Cannot perform transaction on yourself!");
+        }
+
+        Long newAmount = transaction.getAmount();
+        if (!hasSourceValideBalance(source, newAmount)) {
+            throw new AmountExceedBalanceException("Amount exceed your balance!");
+        }
+
+        long sourceBalance = calculateSourceBalance(getSourceBalance(source), newAmount);
+        Transaction sourceTransaction = createTransaction(transaction, source, sourceBalance, -transaction.getAmount());
+        long targetBalance = calculateTargetBalance(target, newAmount);
+        createTransaction(transaction, target, targetBalance, transaction.getAmount());
+        Transaction targetTransaction = createTransaction(transaction, target, targetBalance, transaction.getAmount());
+
+        transactionRepository.save(sourceTransaction);
+        transactionRepository.save(targetTransaction);
 
 
+        source.get().setBalance(sourceBalance);
+        target.get().setBalance(targetBalance);
 
+        userRepository.save(source.get());
+        userRepository.save(target.get());
+    }
 
+    private Transaction createTransaction(Transaction transaction, Optional<User> account, long balance, long amount) {
+        return new Transaction(transaction.getId(), transaction.getSource(), transaction.getTarget(), amount, new Date(), account.get(), balance);
+    }
+
+    private long calculateTargetBalance(Optional<User> target, Long newAmount) {
+        return target.get().getBalance() + newAmount;
+    }
+
+    private long calculateSourceBalance(Long sourceBalance, Long amount) {
+        return sourceBalance - amount;
+    }
+
+    private boolean hasSourceValideBalance(Optional<User> source, Long amount) {
+        Long sourceBalance = getSourceBalance(source);
+        return calculateSourceBalance(sourceBalance, amount) > MINIMUM_VALID_BALANCE;
+    }
+
+    private Long getSourceBalance(Optional<User> source) {
+        return source.get().getBalance();
+    }
 }
