@@ -110,7 +110,12 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
-        // Create new user's account
+        createNewUserAccount(signUpRequest);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    private void createNewUserAccount(SignupRequest signUpRequest) {
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
@@ -127,7 +132,5 @@ public class AuthController {
         user.setRoles(roles);
         user.setBalance(1000L);
         userRepository.save(user);
-
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 }
