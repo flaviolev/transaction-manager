@@ -1,6 +1,6 @@
 # Finance manager
 ## Tech stack:
-### Spring Boot , Angular 13, mySQL, Liquibase,Cypress, Gradle
+### Spring Boot 3, Angular 13, mySQL, Liquibase, Cypress, Gradle
 
 
 
