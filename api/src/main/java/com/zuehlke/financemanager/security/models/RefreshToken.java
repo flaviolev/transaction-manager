@@ -3,7 +3,7 @@ package com.zuehlke.financemanager.security.models;
 import com.zuehlke.financemanager.models.User;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity(name = "refreshtoken")

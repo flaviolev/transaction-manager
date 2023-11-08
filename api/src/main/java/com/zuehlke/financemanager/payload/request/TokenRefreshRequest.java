@@ -1,6 +1,6 @@
 package com.zuehlke.financemanager.payload.request;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class TokenRefreshRequest {
     @NotBlank
