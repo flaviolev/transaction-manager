@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import com.zuehlke.financemanager.models.ERole;
 import com.zuehlke.financemanager.models.Role;
